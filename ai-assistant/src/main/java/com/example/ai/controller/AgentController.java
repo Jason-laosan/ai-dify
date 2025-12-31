@@ -2,6 +2,7 @@ package com.example.ai.controller;
 
 import com.example.ai.dto.AgentRequest;
 import com.example.ai.dto.AgentResponse;
+import com.example.ai.dto.ApiResponse;
 import com.example.ai.service.AgentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,14 +22,14 @@ public class AgentController {
 
     @PostMapping("/execute")
     @Operation(summary = "执行Agent任务", description = "让AI Agent执行指定任务")
-    public AgentResponse executeTask(@Valid @RequestBody AgentRequest request) {
+    public ApiResponse<AgentResponse> executeTask(@Valid @RequestBody AgentRequest request) {
         log.info("Received agent task request: {}", request.getTask());
-        return agentService.executeTask(request);
+        return ApiResponse.ok(agentService.executeTask(request));
     }
 
     @PostMapping("/java-assist")
     @Operation(summary = "Java开发助手", description = "专门用于Java开发相关问题的AI助手")
-    public AgentResponse javaAssist(@RequestParam String question) {
+    public ApiResponse<AgentResponse> javaAssist(@RequestParam String question) {
         log.info("Received Java assist request: {}", question);
         
         AgentRequest request = AgentRequest.builder()
@@ -36,12 +37,12 @@ public class AgentController {
                 .agentType(AgentRequest.AgentType.JAVA_ASSISTANT)
                 .build();
         
-        return agentService.executeTask(request);
+        return ApiResponse.ok(agentService.executeTask(request));
     }
 
     @PostMapping("/code-review")
     @Operation(summary = "代码审查", description = "AI代码审查服务")
-    public AgentResponse codeReview(@RequestBody String code) {
+    public ApiResponse<AgentResponse> codeReview(@RequestBody String code) {
         log.info("Received code review request");
         
         AgentRequest request = AgentRequest.builder()
@@ -49,6 +50,6 @@ public class AgentController {
                 .agentType(AgentRequest.AgentType.CODE_REVIEWER)
                 .build();
         
-        return agentService.executeTask(request);
+        return ApiResponse.ok(agentService.executeTask(request));
     }
 }

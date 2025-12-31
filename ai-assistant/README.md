@@ -80,9 +80,29 @@ curl -X POST http://localhost:8080/api/chat/dify \
   }'
 ```
 
+**Dify聊天（Spring MVC封装返回体）**
+```bash
+curl -X POST http://localhost:8080/api/chat/dify/mvc \
+  -H "Content-Type: application/json" \
+  -d '{
+    "message": "什么是Spring Boot？",
+    "userId": "user-123"
+  }'
+```
+
 **LangChain聊天**
 ```bash
 curl -X POST http://localhost:8080/api/chat/langchain \
+  -H "Content-Type: application/json" \
+  -d '{
+    "message": "请解释Java Stream API",
+    "userId": "user-123"
+  }'
+```
+
+**LangChain聊天（Spring MVC封装返回体）**
+```bash
+curl -X POST http://localhost:8080/api/chat/langchain/mvc \
   -H "Content-Type: application/json" \
   -d '{
     "message": "请解释Java Stream API",

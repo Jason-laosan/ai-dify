@@ -1,5 +1,6 @@
 package com.example.ai.controller;
 
+import com.example.ai.dto.ApiResponse;
 import com.example.ai.dto.ChatRequest;
 import com.example.ai.dto.ChatResponse;
 import com.example.ai.service.ChatService;
@@ -47,6 +48,20 @@ public class ChatController {
     public ChatResponse chatWithLangChain(@Valid @RequestBody ChatRequest request) {
         log.info("Received LangChain chat request: {}", request.getMessage());
         return langChainChatService.chat(request);
+    }
+
+    @PostMapping("/dify/mvc")
+    @Operation(summary = "Dify聊天（Spring MVC封装）", description = "通过Dify平台进行AI对话，返回标准ApiResponse封装结果")
+    public ApiResponse<ChatResponse> chatWithDifyMvc(@Valid @RequestBody ChatRequest request) {
+        log.info("Received Dify MVC chat request: {}", request.getMessage());
+        return ApiResponse.ok(difyChatService.chat(request));
+    }
+
+    @PostMapping("/langchain/mvc")
+    @Operation(summary = "LangChain聊天（Spring MVC封装）", description = "通过LangChain4j进行AI对话，返回标准ApiResponse封装结果")
+    public ApiResponse<ChatResponse> chatWithLangChainMvc(@Valid @RequestBody ChatRequest request) {
+        log.info("Received LangChain MVC chat request: {}", request.getMessage());
+        return ApiResponse.ok(langChainChatService.chat(request));
     }
 
     @PostMapping(value = "/langchain/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
