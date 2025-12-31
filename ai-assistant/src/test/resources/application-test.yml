@@ -1,0 +1,17 @@
+server:
+  port: 8081
+
+ai:
+  dify:
+    enabled: false
+    base-url: http://localhost
+    api-key: test-key
+  openai:
+    enabled: false
+    api-key: test-key
+    model: gpt-3.5-turbo
+
+logging:
+  level:
+    root: WARN
+    com.example.ai: DEBUG
